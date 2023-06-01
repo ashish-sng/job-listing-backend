@@ -1,48 +1,24 @@
 const mongoose = require("mongoose");
-const { Schema } = require("mongoose");
+
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  companyName: {
+  name: {
     type: String,
-    required: [true, "Company name is required"],
+    required: [true, "Name is required"],
   },
-  addLogoURL: {
+  email: {
     type: String,
-    validate: {
-      validator: (value) => {
-        // Simple URL validation
-        const urlRegex = /^(http|https):\/\/[^ "]+$/;
-        return urlRegex.test(value);
-      },
-      message: "Invalid logo URL",
-    },
+    required: [true, "Email is required"],
+    unique: true,
   },
-  jobPosition: {
+  mobileNumber: {
     type: String,
-    required: [true, "Job position is required"],
+    required: [true, "Mobile number is required"],
   },
-  monthlySalary: {
+  password: {
     type: String,
-  },
-  jobType: {
-    type: String,
-  },
-  remoteOnsite: {
-    type: String,
-  },
-  jobLocation: {
-    type: String,
-    required: [true, "Job location is required"],
-  },
-  jobDescription: {
-    type: String,
-    required: [true, "Job description is required"],
-  },
-  aboutCompany: {
-    type: String,
-  },
-  skillsRequired: {
-    type: [String],
+    required: [true, "Password is required"],
   },
 });
 
