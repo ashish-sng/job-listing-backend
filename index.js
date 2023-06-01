@@ -3,17 +3,13 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const cors = require("cors");
-
-const User = require("./models/userModel");
-
 const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 dotenv.config();
 
@@ -30,6 +26,22 @@ app.get("/health", (req, res) => {
   });
 });
 
+
+
+app.listen(port, () => {
+  mongoose
+    .connect(process.env.DB_CONNECT, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log("MongoDB Connected");
+      console.log(`App listening at http://localhost:${process.env.port}`);
+    })
+    .catch((err) => console.log(err));
+});
+
+/*
 // Register a new user
 app.post("/register", async (req, res) => {
   try {
@@ -113,16 +125,4 @@ app.use((err, req, res, next) => {
     .status(500)
     .json({ error: "Something went wrong! Please try again later." });
 });
-
-app.listen(port, () => {
-  mongoose
-    .connect(process.env.DB_CONNECT, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log("MongoDB Connected");
-      console.log(`App listening at http://localhost:${process.env.port}`);
-    })
-    .catch((err) => console.log(err));
-});
+*/
