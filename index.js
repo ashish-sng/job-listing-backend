@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const userModel = require("./models/userModel");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -13,7 +14,7 @@ dotenv.config();
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-// Healt check endpoint
+// Health check endpoint
 app.get("/health", (req, res) => {
   const dbStatus =
     mongoose.connection.readyState === 1 ? "Connected" : "Disconnected";
@@ -22,6 +23,21 @@ app.get("/health", (req, res) => {
     server: "Running",
     database: dbStatus,
   });
+});
+
+// Create a new user
+app.post("/users", (req, res) => {
+  const userData = req.body;
+
+  const newUser = new userModel(userData);
+  newUser
+    .save()
+    .then(() => {
+      res.status(201).json({ message: "User created successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Failed to create user" });
+    });
 });
 
 app.listen(port, () => {
