@@ -97,24 +97,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-
-app.listen(port, () => {
-  mongoose
-    .connect(process.env.DB_CONNECT, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log("MongoDB Connected");
-      console.log(`App listening at http://localhost:${process.env.port}`);
-    })
-    .catch((err) => console.log(err));
-});
-
-/*
-
-
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
@@ -128,4 +110,16 @@ app.use((err, req, res, next) => {
     .status(500)
     .json({ error: "Something went wrong! Please try again later." });
 });
-*/
+
+app.listen(port, () => {
+  mongoose
+    .connect(process.env.DB_CONNECT, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log("MongoDB Connected");
+      console.log(`App listening at http://localhost:${process.env.port}`);
+    })
+    .catch((err) => console.log(err));
+});
