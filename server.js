@@ -1,7 +1,7 @@
 const app = require("./index");
 const mongoose = require("mongoose");
 
-app.listen(process.env.port, () => {
+app.listen(process.env.PORT, () => {
   mongoose
     .connect(process.env.DB_CONNECT, {
       useNewUrlParser: true,
@@ -9,7 +9,7 @@ app.listen(process.env.port, () => {
     })
     .then(() => {
       console.log("MongoDB Connected");
-      console.log(`App listening at http://localhost:${process.env.port}`);
+      console.log(`App listening at http://localhost:${process.env.PORT}`);
     })
     .catch((err) => console.log(err));
 });
