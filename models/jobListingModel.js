@@ -9,14 +9,6 @@ const jobListingSchema = new Schema({
   },
   addLogoURL: {
     type: String,
-    validate: {
-      validator: (value) => {
-        // Simple URL validation
-        const urlRegex = /^(http|https):\/\/[^ "]+$/;
-        return urlRegex.test(value);
-      },
-      message: "Invalid logo URL",
-    },
   },
   jobPosition: {
     type: String,
@@ -24,16 +16,19 @@ const jobListingSchema = new Schema({
   },
   monthlySalary: {
     type: String,
+    required: [true, "Monthly salary is required"],
   },
   jobType: {
     type: String,
+    required: [true, "Job type is required"],
   },
   remoteOnsite: {
     type: String,
+    required: [true, "Remote/Onsite is required"],
   },
   jobLocation: {
     type: String,
-    required: [true, "Job location is required"],
+    // required: [true, "Job location is required"],
   },
   jobDescription: {
     type: String,
@@ -41,10 +36,13 @@ const jobListingSchema = new Schema({
   },
   aboutCompany: {
     type: String,
+    required: [true, "About company is required"],
   },
   skillsRequired: {
     type: [String],
+    required: [true, "Skills required is required"],
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const jobListingModel = mongoose.model("JobListing", jobListingSchema);
